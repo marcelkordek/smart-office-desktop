@@ -1,4 +1,4 @@
-const {Menu} = require('electron')
+const {Menu,BrowserWindow} = require('electron')
 const electron = require('electron')
 const app = electron.app
 const isDev = require('electron-is-dev');

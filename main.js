@@ -28,7 +28,7 @@ function createWindow () {
   mainWindow.loadURL('http://smartoffice.local')
   
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+   mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -39,7 +39,10 @@ function createWindow () {
   })
 
   mainWindow.webContents.on('dom-ready', function(e) {
-    //mainWindow.webContents.executeJavaScript('document.getElementsByTagName("html")[0].className += " platform-' + process.platform + '" ')
+    setTimeout(function(){
+     // mainWindow.webContents.executeJavaScript('document.getElementById("versionString").innerHTML = " platform-' + process.platform + '" ')
+    },500)
+    
   })
 
   mainWindow.once('ready-to-show', () => {
