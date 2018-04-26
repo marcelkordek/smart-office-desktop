@@ -1,6 +1,8 @@
 const {Menu} = require('electron')
 const electron = require('electron')
 const app = electron.app
+const isDev = require('electron-is-dev');
+const update = require('./updater');
 
 const template = [{
   label: 'Ansicht',
@@ -56,7 +58,11 @@ if (process.platform === 'darwin') {
     submenu: [{
       label: `Über ${name}`,
       role: 'about'
-    }, {
+    },
+    {
+      label: 'Auf Update prüfen ',
+      click(item, focusedWindow, event) { update.checkForUpdates(item, focusedWindow, event); }
+    },{
       type: 'separator'
     }, {
       type: 'separator'

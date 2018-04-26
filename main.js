@@ -8,8 +8,13 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
-// Set Name
-//app.setName('Smart-Office')
+const autoUpdater = require("electron-updater").autoUpdater;
+const log = require('electron-log');
+const isDev = require('electron-is-dev');
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+log.info('App starting...');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -20,15 +25,8 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 1200, height: 830, titleBarStyle: 'hiddenInset', movable: true, resizable:true, backgroundColor: '#fffff', show: false})
 
-  // and load the index.html of the app.
-  // mainWindow.loadURL(url.format({
-  //   pathname: path.join(__dirname, 'index.html'),
-  //   protocol: 'file:',
-  //   slashes: true
-  // }))
   mainWindow.loadURL('http://smartoffice.local')
-  //mainWindow.loadURL('file://' + __dirname + '/index.html');
-
+  
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
@@ -54,7 +52,10 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', function(){
+  createWindow();
+  if (!isDev) autoUpdater.checkForUpdatesAndNotify();
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
