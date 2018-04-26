@@ -1,0 +1,54 @@
+{
+  "name": "smart-office",
+  "productName": "Smart-Office",
+  "version": "2.2.1",
+  "description": "Smart-Office",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds --ignore=release-builds",
+    "package-win": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Tutorial App\"",
+    "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds",
+    "dist": "build",
+    "build-mac": "build -m -p never",
+    "release": "build -m",
+    "postversion": "git add .gitignore && git push && npm run release",
+    "ship-patch": "npm version patch --force -m \"version %s\"",
+    "ship-minor": "npm version minor --force -m \"version %s\"",
+    "ship-major": "npm version major --force -m \"version %s\""
+  },
+  "build": {
+    "appId": "de.marcelkordek.${name}",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "squirrel",
+      "icon": "build/icon.ico"
+    }
+  },
+  "author": "Marcel Kordek",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^2.0.0-beta.7",
+    "electron-builder": "^20.8.1",
+    "electron-packager": "^11.0.1"
+  }
+}
